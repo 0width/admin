@@ -15,7 +15,7 @@ func init() {
 		if config.Debug {
 			gormConfig.Logger = logger.Default.LogMode(logger.Info)
 		}
-
+		gormConfig.DisableForeignKeyConstraintWhenMigrating = config.DisableForeignKeyConstraintWhenMigrating
 		return gorm.Open(mysql.Open(config.Url), &gormConfig)
 	})
 }

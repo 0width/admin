@@ -11,11 +11,12 @@ func init() {
 			_ = entity.Db.AutoMigrate(&Menu{})
 			_ = entity.Db.AutoMigrate(&Role{})
 			_ = entity.Db.AutoMigrate(&User{})
+			_ = entity.Db.AutoMigrate(&Post{})
 		}
 	})
 }
 
 type Entity struct {
-	Db *gorm.DB `autowire:""`
-	AutoMigrate bool `value:"${db.autoMigrate:=false}"`
+	Db          *gorm.DB `autowire:""`
+	AutoMigrate bool     `value:"${db.autoMigrate:=false}"`
 }

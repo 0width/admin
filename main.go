@@ -4,6 +4,9 @@ import (
 	_ "admin/business/pogo/entity"
 	_ "admin/component/db/mysql"
 
+	_ "admin/business/controller"
+	_ "admin/business/service"
+
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +14,7 @@ import (
 func main() {
 	server := gin.Default()
 
-	gc.RegisterBean(&server)
+	gc.RegisterBean(server)
 
 	confDir := "./config"
 
