@@ -19,7 +19,7 @@ type UserController struct {
 	UserService system.UserService `autowire:""`
 }
 
-func (this UserController) list(ctx *gin.Context) {
+func (this *UserController) list(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{
 		"code": 200,
 		"data": this.UserService.SelectUserList(),
