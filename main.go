@@ -5,6 +5,7 @@ import (
 	_ "admin/component/db/mysql"
 
 	_ "admin/business/controller"
+	_ "admin/business/filter"
 	_ "admin/business/service"
 
 	"git.xios.club/xios/gc"

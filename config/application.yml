@@ -1,9 +1,12 @@
 
-active: dev
-
 db:
   url: root:docker-mysql-123456@tcp(hw.xios.club:3306)/admin?charset=utf8mb4&parseTime=True&loc=Local
   debug: true
   autoMigrate: false
   # 是否跳过创建外键
   disableForeignKeyConstraintWhenMigrating: true
+
+jwt:
+  expire: 86400
+  key: ljqlwjerqweroqueroqewr
+  bufferTime: 3600

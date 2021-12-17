@@ -8,11 +8,16 @@ import (
 )
 
 func init() {
-	gc.RegisterBeanFn(func(g *gin.Engine) *UserController {
+	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup, g *gin.Engine) *UserController {
 		userController := &UserController{}
-		g.GET("/system/user/list", userController.list)
+		sysUser := authRouter.Group("/system/user")
+		{
+			sysUser.GET("/list", userController.list)
+			sysUser.GET("/info", userController.userInfo)
+			sysUser.GET("/:id", userController.userInfo)
+		}
 		return userController
-	})
+	}, "authRouter")
 }
 
 type UserController struct {
@@ -23,5 +28,13 @@ func (this *UserController) list(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{
 		"code": 200,
 		"data": this.UserService.SelectUserList(),
+	})
+}
+
+func (this *UserController) userInfo(ctx *gin.Context) {
+	user := this.UserService.SelectUserById(ctx.GetUint("userId"))
+	ctx.JSON(200, gin.H{
+		"code": 200,
+		"data": user,
 	})
 }
