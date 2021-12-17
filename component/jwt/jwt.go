@@ -11,8 +11,7 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(JwtConfig))
-	gc.RegisterNameBeanFn("jwt", func(jwtService common.JwtService, jwtConfig *JwtConfig) gin.HandlerFunc {
+	gc.RegisterNameBeanFn("jwt", func(jwtService common.JwtService, jwtConfig JwtConfig) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			token := ctx.Request.Header.Get("x-token")
 			if token == "" {

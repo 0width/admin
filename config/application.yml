@@ -9,3 +9,4 @@ db:
 jwt:
   expire: 86400
   key: ljqlwjerqweroqueroqewr
+  bufferTime: 3600

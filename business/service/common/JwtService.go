@@ -2,16 +2,13 @@ package common
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	uuid "github.com/satori/go.uuid"
 )
 
 type JwtCustomClaims struct {
-	UUID        uuid.UUID
-	ID          uint
-	Username    string
-	NickName    string
-	AuthorityId string
-	BufferTime  int64
+	UserId     uint
+	Username   string
+	NickName   string
+	BufferTime int64
 	jwt.StandardClaims
 }
 

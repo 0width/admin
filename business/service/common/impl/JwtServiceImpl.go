@@ -6,7 +6,7 @@ import (
 
 	"git.xios.club/xios/gc"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 	"golang.org/x/sync/singleflight"
 )
 
@@ -26,7 +26,7 @@ type JwtServiceImpl struct {
 
 func (JwtServiceImpl) CreateToken(claims common.JwtCustomClaims, key string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(key)
+	return token.SignedString([]byte(key))
 }
 
 func (this *JwtServiceImpl) CreateTokenByOldToken(oldToken, key string, claims common.JwtCustomClaims) (string, error) {
