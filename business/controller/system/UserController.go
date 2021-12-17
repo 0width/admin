@@ -2,7 +2,6 @@ package system
 
 import (
 	"admin/business/service/system"
-	"strconv"
 
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
@@ -15,6 +14,7 @@ func init() {
 		{
 			sysUser.GET("/list", userController.list)
 			sysUser.GET("/info", userController.userInfo)
+			sysUser.GET("/:id", userController.userInfo)
 		}
 		return userController
 	}, "authRouter")
@@ -32,16 +32,9 @@ func (this *UserController) list(ctx *gin.Context) {
 }
 
 func (this *UserController) userInfo(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		ctx.JSON(200, gin.H{
-			"code": 400,
-			"msg":  "ID参数类型错误",
-		})
-		return
-	}
+	user := this.UserService.SelectUserById(ctx.GetUint("userId"))
 	ctx.JSON(200, gin.H{
 		"code": 200,
-		"data": id,
+		"data": user,
 	})
 }

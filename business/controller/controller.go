@@ -9,9 +9,9 @@ import (
 )
 
 func init() {
-	gc.RegisterNameBeanFn("authRouter", func(jwtMiddleware gin.HandlerFunc, g *gin.Engine) *gin.RouterGroup {
+	gc.RegisterNameBeanFn("authRouter", func(jwtMiddleware gin.HandlerFunc, roleFilter gin.HandlerFunc, g *gin.Engine) *gin.RouterGroup {
 		group := g.Group("/")
-		group.Use(jwtMiddleware)
+		group.Use(jwtMiddleware, roleFilter)
 		return group
-	}, "jwt")
+	}, "jwt", "roleFilter")
 }

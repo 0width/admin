@@ -33,7 +33,7 @@ func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return this.JwtService.CreateToken(common.JwtCustomClaims{
+	return this.JwtService.CreateToken(common.JwtCliams{
 		UserId:     user.ID,
 		Username:   user.Name,
 		NickName:   user.NickName,

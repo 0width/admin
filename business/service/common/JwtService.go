@@ -4,7 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-type JwtCustomClaims struct {
+type JwtCliams struct {
 	UserId     uint
 	Username   string
 	NickName   string
@@ -13,7 +13,7 @@ type JwtCustomClaims struct {
 }
 
 type JwtService interface {
-	CreateToken(claims JwtCustomClaims, key string) (string, error)
-	CreateTokenByOldToken(oldToken, key string, claims JwtCustomClaims) (string, error)
-	ParseToken(tokenString, key string) (*JwtCustomClaims, error)
+	CreateToken(claims JwtCliams, key string) (string, error)
+	CreateTokenByOldToken(oldToken, key string, claims JwtCliams) (string, error)
+	ParseToken(tokenString, key string) (*JwtCliams, error)
 }

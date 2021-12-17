@@ -18,8 +18,14 @@ type UserServiceImpl struct {
 	Db *gorm.DB `autowire:""`
 }
 
-func (this *UserServiceImpl) SelectUserList() []entity.User {
-	var users []entity.User
+func (this *UserServiceImpl) SelectUserList() []*entity.User {
+	var users []*entity.User
 	this.Db.Find(&users)
 	return users
+}
+
+func (this *UserServiceImpl) SelectUserById(id uint) *entity.User {
+	var user *entity.User
+	this.Db.Find(&user, id)
+	return user
 }

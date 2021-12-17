@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"admin/business/common/constant"
 	"admin/business/service/common"
 	"admin/business/service/common/impl"
 	"strconv"
@@ -47,7 +48,8 @@ func init() {
 				ctx.Header("new-token", newToken)
 				ctx.Header("new-expires-at", strconv.FormatInt(newClaims.ExpiresAt, 10))
 			}
-			ctx.Set("claims", claims)
+			ctx.Set("userId", claims.UserId)
+			ctx.Set(constant.CLAIMS, claims)
 			ctx.Next()
 		}
 	})
