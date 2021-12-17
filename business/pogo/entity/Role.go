@@ -10,6 +10,7 @@ type Role struct {
 	Status int     `gorm:"type:tinyint;default:0;comment:0: 正常 1: 停用"`
 	Remark string  `gorm:"size:1023;comment:备注"`
 	Users  []*User `gorm:"many2many:user_role"`
+	Menus  []*Menu `gorm:"many2many:role_menu"`
 }
 
 func (Role) TableName() string {
