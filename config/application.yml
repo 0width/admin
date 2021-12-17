@@ -6,6 +6,14 @@ db:
   # 是否跳过创建外键
   disableForeignKeyConstraintWhenMigrating: true
 
+redis:
+  addr: hw.xios.club:6379
+  password: docker-redis-123456
+  db: 1
+
+roleFilter:
+  prefix: "perms:"
+
 jwt:
   expire: 86400
   key: ljqlwjerqweroqueroqewr

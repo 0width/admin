@@ -7,6 +7,7 @@ import (
 	_ "admin/business/controller"
 	_ "admin/business/filter"
 	_ "admin/business/service"
+	_ "admin/component/cache"
 
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
