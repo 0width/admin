@@ -4,22 +4,20 @@ import (
 	"admin/business/service/system"
 	"strconv"
 
-	_ "admin/component/jwt"
-
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
 
 func init() {
-	gc.RegisterBeanFn(func(jwtMiddleware gin.HandlerFunc, g *gin.Engine) *UserController {
+	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup, g *gin.Engine) *UserController {
 		userController := &UserController{}
-		userGroup := g.Group("/system/user").Use(jwtMiddleware)
+		sysUser := authRouter.Group("/system/user")
 		{
-			userGroup.GET("/list", userController.list)
-			userGroup.GET("/info", userController.userInfo)
+			sysUser.GET("/list", userController.list)
+			sysUser.GET("/info", userController.userInfo)
 		}
 		return userController
-	}, "jwt")
+	}, "authRouter")
 }
 
 type UserController struct {
