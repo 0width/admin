@@ -26,6 +26,6 @@ func (this *UserServiceImpl) SelectUserList() []*entity.User {
 
 func (this *UserServiceImpl) SelectUserById(id uint) *entity.User {
 	var user *entity.User
-	this.Db.Find(&user, id)
+	this.Db.Preload("Roles").Preload("Dept").Find(&user, id)
 	return user
 }

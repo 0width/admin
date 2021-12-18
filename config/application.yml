@@ -2,6 +2,8 @@
 web:
   port: 20080
 
+active: dev
+
 db:
   url: root:docker-mysql-123456@tcp(hw.xios.club:3306)/admin?charset=utf8mb4&parseTime=True&loc=Local
   debug: true
