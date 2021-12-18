@@ -1,8 +1,11 @@
 package system
 
-import "admin/business/pogo/entity"
+import (
+	"admin/business/pogo/bo/common"
+	"admin/business/pogo/dto/system"
+)
 
 type UserService interface {
-	SelectUserList() []*entity.User
-	SelectUserById(userId uint) *entity.User
+	SelectUserList(page *common.Page) []*system.UserInfo
+	SelectUserById(userId uint) *system.UserInfo
 }
