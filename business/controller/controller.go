@@ -1,9 +1,6 @@
 package controller
 
 import (
-	_ "admin/business/controller/system"
-	_ "admin/component/jwt"
-
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )

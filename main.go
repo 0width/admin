@@ -1,18 +1,11 @@
 package main
 
 import (
-	_ "admin/business/pogo/entity"
-	_ "admin/component/db/mysql"
-
-	_ "admin/business/controller"
-	_ "admin/business/filter"
-	_ "admin/business/service"
-	_ "admin/component/cache"
-
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
 
+//go:generate go run auto_imports/auto_imports.go
 func main() {
 	server := gin.Default()
 
