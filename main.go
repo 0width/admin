@@ -1,6 +1,9 @@
 package main
 
 import (
+	"admin/config"
+	"strconv"
+
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
@@ -19,5 +22,8 @@ func main() {
 	}
 	gc.AutoWireBeans()
 
-	_ = server.Run(":8080")
+	var webConfig *config.WebConfig
+	gc.GetBean(&webConfig)
+
+	_ = server.Run(":" + strconv.Itoa(webConfig.Port))
 }

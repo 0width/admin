@@ -55,7 +55,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	_, err = f.WriteString("package main\n\nimport (\n" + imports + ")")
+	_, err = f.WriteString("package main\n\nimport (\n" + imports + ")\n")
 	if err != nil {
 		panic(err)
 	}
