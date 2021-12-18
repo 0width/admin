@@ -14,13 +14,13 @@ import (
 func main() {
 	dirs := treeset.NewWithStringComparator()
 	fset := token.NewFileSet()
-	filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
 			p, err := parser.ParseDir(fset, path, func(info os.FileInfo) bool {
 				return true
 			}, parser.AllErrors)
 			if err != nil {
-				panic(err)
+				return err
 			}
 			for _, v := range p {
 				for _, v2 := range v.Files {
@@ -34,6 +34,9 @@ func main() {
 		}
 		return nil
 	})
+	if err != nil {
+		panic(err)
+	}
 
 	imports := ""
 	for _, v := range dirs.Values() {
