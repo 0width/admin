@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	gc.RegisterNameBeanFn("jwt", func(jwtService common.JwtService, jwtConfig JwtConfig) gin.HandlerFunc {
+	gc.RegisterNameBeanFn("jwt", func(jwtService common.JwtService, authService common.AuthService, jwtConfig JwtConfig) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			token := ctx.Request.Header.Get("x-token")
 			if token == "" {
@@ -50,6 +50,9 @@ func init() {
 			}
 			ctx.Set("userId", claims.UserId)
 			ctx.Set(constant.CLAIMS, claims)
+
+			authService.CachePerms(claims.UserId)
+
 			ctx.Next()
 		}
 	})

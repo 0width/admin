@@ -16,7 +16,7 @@ redis:
   password: docker-redis-123456
   db: 1
 
-roleFilter:
+authFilter:
   prefix: "perms:"
 
 jwt:

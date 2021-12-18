@@ -6,6 +6,8 @@ import (
 	"admin/business/service/system"
 	"time"
 
+	"github.com/go-redis/redis"
+
 	"git.xios.club/xios/gc"
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
@@ -17,11 +19,14 @@ func init() {
 }
 
 type LoginServiceImpl struct {
-	JwtService common.JwtService `autowire:""`
-	Key        string            `value:"${jwt.key}"`
-	BufferTime int64             `value:"${jwt.bufferTime}"`
-	Expire     int64             `value:"${jwt.expire}"`
-	Db         *gorm.DB          `autowire:""`
+	JwtService  common.JwtService  `autowire:""`
+	AuthService common.AuthService `autowire:""`
+	Key         string             `value:"${jwt.key}"`
+	BufferTime  int64              `value:"${jwt.bufferTime}"`
+	Expire      int64              `value:"${jwt.expire}"`
+	Db          *gorm.DB           `autowire:""`
+	RedisClient *redis.Client      `autowire:""`
+	PermPrefix  string             `value:"${authFilter.prefix}"`
 }
 
 func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
@@ -33,6 +38,9 @@ func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	this.AuthService.CachePerms(user.ID)
+
 	return this.JwtService.CreateToken(common.JwtCliams{
 		UserId:     user.ID,
 		Username:   user.Name,

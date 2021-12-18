@@ -1,4 +1,4 @@
-package roleFilter
+package authFilter
 
 import (
 	"strconv"
@@ -8,12 +8,12 @@ import (
 	"github.com/go-redis/redis"
 )
 
-type RoleFilterConfig struct {
-	Prefix string `value:"${roleFilter.prefix}"`
+type AuthFilterConfig struct {
+	Prefix string `value:"${authFilter.prefix}"`
 }
 
 func init() {
-	gc.RegisterNameBeanFn("roleFilter", func(redisClient *redis.Client, config RoleFilterConfig) gin.HandlerFunc {
+	gc.RegisterNameBeanFn("authFilter", func(redisClient *redis.Client, config AuthFilterConfig) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			res, err := redisClient.SIsMember(config.Prefix+strconv.Itoa(int(ctx.GetUint("userId"))), ctx.FullPath()).Result()
 			if err != nil {
