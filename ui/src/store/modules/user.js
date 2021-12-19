@@ -1,12 +1,15 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, menuList } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import Layout from '@/layout'
+import { loadComponent } from '@/utils/aync_import'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    menus: false
   }
 }
 
@@ -24,8 +27,15 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_MENU: (state) => {
+    state.menus = true
   }
 }
+
+const table = () => import('@/views/table/index')
+const m = new Map()
+m.set('table', table)
 
 const actions = {
   // user login
@@ -42,7 +52,51 @@ const actions = {
       })
     })
   },
-
+  menuList({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      menuList().then(response => {
+        const { data } = response
+        if (!data) {
+          return reject('获取菜单失败')
+        }
+        const routes = []
+        while (data.length > 0) {
+          const c = data.shift()
+          let cComponent = null
+          if (c.parent_id === 0) {
+            cComponent = Layout
+          } else {
+            cComponent = loadComponent(c.component)
+          }
+          const r = {
+            id: c.id,
+            path: c.path,
+            component: cComponent,
+            redirect: c.redirect,
+            name: c.name,
+            meta: {
+              title: c.title,
+              icon: c.icon
+            }
+          }
+          if (c.parent_id === 0) {
+            routes.push(r)
+          } else {
+            routes.forEach((v, i, arr) => {
+              if (c.parent_id === v.id) {
+                if (!v.children) {
+                  v['children'] = []
+                }
+                v.children.push(r)
+              }
+            })
+          }
+        }
+        resolve(routes)
+        console.log(routes)
+      })
+    })
+  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {

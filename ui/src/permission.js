@@ -32,9 +32,14 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
-
-          next()
+          store.dispatch('user/getInfo').then(() => {
+            store.dispatch('user/menuList').then(r => {
+              // 这一句不能少， 貌似可以用vuex代替
+              router.options.routes = router.options.routes.concat(r)
+              router.addRoutes(r)
+              next({ ...to, replace: true })
+            })
+          })
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
