@@ -4,6 +4,8 @@ import (
 	"admin/business/pogo/bo/common"
 	"admin/business/service/system"
 
+	"github.com/sirupsen/logrus"
+
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
@@ -23,6 +25,7 @@ func init() {
 
 type UserController struct {
 	UserService system.UserService `autowire:""`
+	Logger      *logrus.Logger     `autowire:""`
 }
 
 func (this *UserController) userList(ctx *gin.Context) {

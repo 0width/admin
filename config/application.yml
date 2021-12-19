@@ -23,3 +23,8 @@ jwt:
   expire: 86400
   key: ljqlwjerqweroqueroqewr
   bufferTime: 3600
+
+log:
+  level: info
+  format: json
+  file:
