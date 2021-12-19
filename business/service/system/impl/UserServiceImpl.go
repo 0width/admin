@@ -31,7 +31,7 @@ func (this *UserServiceImpl) SelectUserList(page *common2.Page) []*systemDto.Use
 func (this *UserServiceImpl) SelectUserById(id uint) *systemDto.UserInfo {
 	var user *systemDto.UserInfo
 	this.Db.Model(entity.User{}).
-		Select("name, nick_name, email, phone, sex, avatar, remark").
+		Select("id, name, nick_name, email, phone, sex, avatar, remark").
 		Where("status = 0").Find(&user, id)
 	return user
 }

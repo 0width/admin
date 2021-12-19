@@ -12,7 +12,7 @@ import (
 func init() {
 	gc.RegisterBeanFn(func(g *gin.Engine) *LoginController {
 		l := &LoginController{}
-		g.POST("/system/login", l.login)
+		g.POST("/system/user/login", l.login)
 		return l
 	})
 }

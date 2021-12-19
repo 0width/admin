@@ -1,6 +1,6 @@
 package common
 
 type Page struct {
-	Page     int `json:"page"`
-	PageSize int `json:"pageSize"`
+	Page     int `form:"page"`
+	PageSize int `form:"pageSize"`
 }

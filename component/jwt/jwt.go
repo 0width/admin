@@ -40,6 +40,10 @@ func init() {
 				ctx.Abort()
 				return
 			}
+
+			ctx.Set("userId", claims.UserId)
+			ctx.Set(constant.CLAIMS, claims)
+
 			// 续期
 			if claims.ExpiresAt-time.Now().Unix() < claims.BufferTime {
 				claims.ExpiresAt = time.Now().Unix() + jwtConfig.Expire
@@ -47,11 +51,9 @@ func init() {
 				newClaims, _ := jwtService.ParseToken(newToken, jwtConfig.Key)
 				ctx.Header("new-token", newToken)
 				ctx.Header("new-expires-at", strconv.FormatInt(newClaims.ExpiresAt, 10))
-			}
-			ctx.Set("userId", claims.UserId)
-			ctx.Set(constant.CLAIMS, claims)
 
-			authService.CachePerms(claims.UserId)
+				authService.CachePerms(claims.UserId)
+			}
 
 			ctx.Next()
 		}

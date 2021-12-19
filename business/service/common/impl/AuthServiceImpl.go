@@ -26,7 +26,7 @@ func (this *AuthServiceImpl) CachePerms(userId uint) {
 	this.Db.Table("user_role a").
 		Joins("left join role_menu b on a.role_id = b.role_id").
 		Joins("left join menu c on b.menu_id = c.id").
-		Where("a.user_id = ?", userId).
+		Where("a.user_id = ?", userId).Where("c.status = 0").
 		Group("c.perm").Pluck("c.perm", &perms)
 
 	key := this.PermPrefix + strconv.Itoa(int(userId))

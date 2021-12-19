@@ -13,7 +13,7 @@ func init() {
 		userController := &UserController{}
 		sysUser := authRouter.Group("/system/user")
 		{
-			sysUser.GET("/list", userController.list)
+			sysUser.GET("/list", userController.userList)
 			sysUser.GET("/info", userController.userInfo)
 			sysUser.GET("/:id", userController.userInfo)
 		}
@@ -25,7 +25,7 @@ type UserController struct {
 	UserService system.UserService `autowire:""`
 }
 
-func (this *UserController) list(ctx *gin.Context) {
+func (this *UserController) userList(ctx *gin.Context) {
 	var page common.Page
 	if err := ctx.BindQuery(&page); err != nil {
 		ctx.JSON(200, gin.H{
