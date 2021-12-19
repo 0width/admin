@@ -28,3 +28,8 @@ log:
   level: info
   format: json
   file:
+
+system:
+  superManagers:
+    - admin
+    - yangxs

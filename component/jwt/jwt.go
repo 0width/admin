@@ -42,6 +42,7 @@ func init() {
 			}
 
 			ctx.Set("userId", claims.UserId)
+			ctx.Set("userName", claims.Username)
 			ctx.Set(constant.CLAIMS, claims)
 
 			// 续期

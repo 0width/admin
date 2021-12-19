@@ -2,7 +2,9 @@ package system
 
 import (
 	"admin/business/pogo/bo/common"
+	"admin/business/pogo/bo/system/user"
 	"admin/business/service/system"
+	"admin/utils"
 
 	"github.com/sirupsen/logrus"
 
@@ -17,7 +19,7 @@ func init() {
 		{
 			sysUser.GET("/list", userController.userList)
 			sysUser.GET("/info", userController.userInfo)
-			sysUser.GET("/:id", userController.userInfo)
+			sysUser.PUT("/add", userController.addUser)
 		}
 		return userController
 	}, "authRouter")
@@ -44,9 +46,22 @@ func (this *UserController) userList(ctx *gin.Context) {
 }
 
 func (this *UserController) userInfo(ctx *gin.Context) {
-	user := this.UserService.SelectUserById(ctx.GetUint("userId"))
+	res := this.UserService.SelectUserById(ctx.GetUint("userId"))
 	ctx.SecureJSON(200, gin.H{
 		"code": 200,
-		"data": user,
+		"data": res,
 	})
+}
+
+func (this *UserController) addUser(ctx *gin.Context) {
+	var request user.UserInfo
+	if err := ctx.BindJSON(&request); err != nil {
+		ctx.JSON(200, gin.H{
+			"code": 400,
+			"msg":  utils.GetError(err, request),
+		})
+		return
+	}
+	ctx.JSON(200, "ok")
+
 }
