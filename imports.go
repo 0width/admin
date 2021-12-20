@@ -4,7 +4,7 @@ import (
 	_ "admin/business/controller"
 	_ "admin/business/controller/system"
 	_ "admin/business/filter/authFilter"
-	_ "admin/business/pogo/entity"
+	_ "admin/business/pogo/entity/system"
 	_ "admin/business/service/common/impl"
 	_ "admin/business/service/system/impl"
 	_ "admin/component/cache/redis"

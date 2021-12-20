@@ -1,9 +1,9 @@
-package impl
+package SystemServiceImpl
 
 import (
-	"admin/business/pogo/entity"
-	"admin/business/service/common"
-	"admin/business/service/system"
+	systemEntity "admin/business/pogo/entity/system"
+	commonService "admin/business/service/common"
+	SystemService "admin/business/service/system"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -15,23 +15,23 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(LoginServiceImpl)).Export((*system.LoginService)(nil))
+	gc.RegisterBean(new(SystemLoginServiceImpl)).Export((*SystemService.SystemLoginService)(nil))
 }
 
-type LoginServiceImpl struct {
-	JwtService  common.JwtService  `autowire:""`
-	AuthService common.AuthService `autowire:""`
-	Key         string             `value:"${jwt.key}"`
-	BufferTime  int64              `value:"${jwt.bufferTime}"`
-	Expire      int64              `value:"${jwt.expire}"`
-	Db          *gorm.DB           `autowire:""`
-	RedisClient *redis.Client      `autowire:""`
-	PermPrefix  string             `value:"${authFilter.prefix}"`
+type SystemLoginServiceImpl struct {
+	JwtService  commonService.CommonJwtService  `autowire:""`
+	AuthService commonService.CommonAuthService `autowire:""`
+	Key         string                          `value:"${jwt.key}"`
+	BufferTime  int64                           `value:"${jwt.bufferTime}"`
+	Expire      int64                           `value:"${jwt.expire}"`
+	Db          *gorm.DB                        `autowire:""`
+	RedisClient *redis.Client                   `autowire:""`
+	PermPrefix  string                          `value:"${authFilter.prefix}"`
 }
 
-func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
-	user := entity.User{}
-	if err := this.Db.Where(entity.User{Name: userName}).Find(&user).Error; err != nil {
+func (this *SystemLoginServiceImpl) Login(userName, password string) (string, error) {
+	user := systemEntity.SystemUserEntity{}
+	if err := this.Db.Where(systemEntity.SystemUserEntity{Name: userName}).Find(&user).Error; err != nil {
 		return "", err
 	}
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
@@ -41,7 +41,7 @@ func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
 
 	this.AuthService.CachePerms(user.ID)
 
-	return this.JwtService.CreateToken(common.JwtCliams{
+	return this.JwtService.CreateToken(commonService.JwtCliams{
 		UserId:     user.ID,
 		Username:   user.Name,
 		NickName:   user.NickName,

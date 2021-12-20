@@ -1,7 +1,7 @@
-package system
+package SystemService
 
-import "admin/business/pogo/dto/system"
+import systemDTO "admin/business/pogo/dto/system"
 
-type MenuService interface {
-	SelectMenuList(userId uint) []*system.MenuInfo
+type SystemMenuService interface {
+	SelectMenuList(userId uint) []*systemDTO.SystemMenuInfoDTO
 }

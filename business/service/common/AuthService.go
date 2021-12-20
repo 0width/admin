@@ -1,5 +1,5 @@
-package common
+package commonService
 
-type AuthService interface {
+type CommonAuthService interface {
 	CachePerms(userId uint)
 }

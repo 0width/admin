@@ -1,4 +1,4 @@
-package common
+package commonService
 
 import (
 	"github.com/dgrijalva/jwt-go"
@@ -12,7 +12,7 @@ type JwtCliams struct {
 	jwt.StandardClaims
 }
 
-type JwtService interface {
+type CommonJwtService interface {
 	CreateToken(claims JwtCliams, key string) (string, error)
 	CreateTokenByOldToken(oldToken, key string, claims JwtCliams) (string, error)
 	ParseToken(tokenString, key string) (*JwtCliams, error)

@@ -1,12 +1,12 @@
-package entity
+package systemEntity
 
 import "gorm.io/gorm"
 
-// Dept 部门表
-type Dept struct {
+// SystemDeptEntity 部门表
+type SystemDeptEntity struct {
 	gorm.Model
 	ParentId  *uint
-	Parent    *Dept
+	Parent    *SystemDeptEntity
 	Ancestors string `gorm:"size:64;comment:祖级列表"`
 	Name      string `gorm:"size:64"`
 	Order     int    `gorm:"size:32"`
@@ -15,6 +15,6 @@ type Dept struct {
 	Status    int    `gorm:"type:tinyint"`
 }
 
-func (Dept) TableName() string {
+func (SystemDeptEntity) TableName() string {
 	return "dept"
 }

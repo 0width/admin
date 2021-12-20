@@ -1,10 +1,10 @@
-package entity
+package systemEntity
 
 import (
 	"gorm.io/gorm"
 )
 
-type Menu struct {
+type SystemMenuEntity struct {
 	gorm.Model
 	Name      string `gorm:"type:string;size:64;comment:菜单路由名称"`
 	Title     string `gorm:"type:string;size:64;comment:菜单名称"`
@@ -16,15 +16,15 @@ type Menu struct {
 	Component string `gorm:"type:string;size:64;comment:组件"`
 	Order     int    `gorm:"type:int;size:32;comment:菜单顺序"`
 	ParentId  uint   `gorm:"comment:父菜单ID"`
-	Parent    *Menu
-	Remark    string  `gorm:"type:string;size:255;comment:备注"`
-	Perm      string  `gorm:"type:string;size:64;index;comment:权限标识"`
-	Type      int     `gorm:"type:tinyint;comment:1:目录 2:菜单 3:按钮"`
-	Status    int     `gorm:"type:tinyint;default:0;not null;comment:0: 正常 1: 停用"`
-	Visible   int     `gorm:"type:tinyint;default:0;not null;comment:0: 正常 1: 隐藏"`
-	Roles     []*Role `gorm:"many2many:role_menu"`
+	Parent    *SystemMenuEntity
+	Remark    string              `gorm:"type:string;size:255;comment:备注"`
+	Perm      string              `gorm:"type:string;size:64;index;comment:权限标识"`
+	Type      int                 `gorm:"type:tinyint;comment:1:目录 2:菜单 3:按钮"`
+	Status    int                 `gorm:"type:tinyint;default:0;not null;comment:0: 正常 1: 停用"`
+	Visible   int                 `gorm:"type:tinyint;default:0;not null;comment:0: 正常 1: 隐藏"`
+	Roles     []*SystemRoleEntity `gorm:"many2many:role_menu"`
 }
 
-func (Menu) TableName() string {
+func (SystemMenuEntity) TableName() string {
 	return "menu"
 }

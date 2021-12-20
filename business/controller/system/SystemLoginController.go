@@ -1,32 +1,32 @@
 package system
 
 import (
-	"admin/business/pogo/bo/system/login"
-	"admin/business/service/system"
-	"admin/utils"
+	"admin/business/common"
+	systemBO "admin/business/pogo/bo/system"
+	SystemService "admin/business/service/system"
 
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
 
 func init() {
-	gc.RegisterBeanFn(func(g *gin.Engine) *LoginController {
-		l := &LoginController{}
+	gc.RegisterBeanFn(func(g *gin.Engine) *SystemLoginController {
+		l := &SystemLoginController{}
 		g.POST("/system/user/login", l.login)
 		return l
 	})
 }
 
-type LoginController struct {
-	LoginService system.LoginService `autowire:""`
+type SystemLoginController struct {
+	LoginService SystemService.SystemLoginService `autowire:""`
 }
 
-func (this *LoginController) login(ctx *gin.Context) {
-	request := login.Login{}
+func (this *SystemLoginController) login(ctx *gin.Context) {
+	request := systemBO.SystemLoginBO{}
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 400,
-			"msg":  utils.GetError(err, request),
+			"msg":  common.GetError(err, request),
 		})
 		return
 	}

@@ -1,6 +1,6 @@
-package system
+package systemDTO
 
-type MenuInfo struct {
+type SystemMenuInfoDTO struct {
 	ID        uint   `json:"id"`
 	Name      string `json:"name"`
 	Title     string `json:"title"`

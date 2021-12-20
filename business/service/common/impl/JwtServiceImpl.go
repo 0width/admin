@@ -1,7 +1,7 @@
-package impl
+package commonServiceImpl
 
 import (
-	"admin/business/service/common"
+	commonService "admin/business/service/common"
 	"errors"
 
 	"git.xios.club/xios/gc"
@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(JwtServiceImpl)).Export((*common.JwtService)(nil))
+	gc.RegisterBean(new(CommonJwtServiceImpl)).Export((*commonService.CommonJwtService)(nil))
 }
 
 var (
@@ -21,15 +21,15 @@ var (
 	TokenInvalid     = errors.New("Couldn't handle this token")
 )
 
-type JwtServiceImpl struct {
+type CommonJwtServiceImpl struct {
 }
 
-func (JwtServiceImpl) CreateToken(claims common.JwtCliams, key string) (string, error) {
+func (CommonJwtServiceImpl) CreateToken(claims commonService.JwtCliams, key string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(key))
 }
 
-func (this *JwtServiceImpl) CreateTokenByOldToken(oldToken, key string, claims common.JwtCliams) (string, error) {
+func (this *CommonJwtServiceImpl) CreateTokenByOldToken(oldToken, key string, claims commonService.JwtCliams) (string, error) {
 	group := &singleflight.Group{}
 	v, err, _ := group.Do("JWT:"+oldToken, func() (interface{}, error) {
 		return this.CreateToken(claims, key)
@@ -37,8 +37,8 @@ func (this *JwtServiceImpl) CreateTokenByOldToken(oldToken, key string, claims c
 	return v.(string), err
 }
 
-func (this *JwtServiceImpl) ParseToken(tokenString, key string) (*common.JwtCliams, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &common.JwtCliams{}, func(token *jwt.Token) (i interface{}, e error) {
+func (this *CommonJwtServiceImpl) ParseToken(tokenString, key string) (*commonService.JwtCliams, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &commonService.JwtCliams{}, func(token *jwt.Token) (i interface{}, e error) {
 		return []byte(key), nil
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func (this *JwtServiceImpl) ParseToken(tokenString, key string) (*common.JwtClia
 		}
 	}
 	if token != nil {
-		if claims, ok := token.Claims.(*common.JwtCliams); ok && token.Valid {
+		if claims, ok := token.Claims.(*commonService.JwtCliams); ok && token.Valid {
 			return claims, nil
 		}
 		return nil, TokenInvalid

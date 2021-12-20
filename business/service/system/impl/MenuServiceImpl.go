@@ -1,8 +1,8 @@
-package impl
+package SystemServiceImpl
 
 import (
-	"admin/business/pogo/dto/system"
-	system2 "admin/business/service/system"
+	systemDTO "admin/business/pogo/dto/system"
+	SystemService "admin/business/service/system"
 
 	"git.xios.club/xios/gc"
 
@@ -10,15 +10,15 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(MenuServiceImpl)).Export((*system2.MenuService)(nil))
+	gc.RegisterBean(new(SystemMenuServiceImpl)).Export((*SystemService.SystemMenuService)(nil))
 }
 
-type MenuServiceImpl struct {
+type SystemMenuServiceImpl struct {
 	Db *gorm.DB `autowire:""`
 }
 
-func (this *MenuServiceImpl) SelectMenuList(userId uint) []*system.MenuInfo {
-	var menuInfos []*system.MenuInfo
+func (this *SystemMenuServiceImpl) SelectMenuList(userId uint) []*systemDTO.SystemMenuInfoDTO {
+	var menuInfos []*systemDTO.SystemMenuInfoDTO
 	this.Db.Table("menu").Where("id in (?)",
 		this.Db.Table("user_role a").Select("b.menu_id").
 			Joins("left join role_menu b on a.role_id = b.role_id").

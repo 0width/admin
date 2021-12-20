@@ -1,11 +1,11 @@
-package system
+package SystemService
 
 import (
-	"admin/business/pogo/bo/common"
-	"admin/business/pogo/dto/system"
+	commonBO "admin/business/pogo/bo/common"
+	systemDTO "admin/business/pogo/dto/system"
 )
 
-type UserService interface {
-	SelectUserList(page *common.Page) []*system.UserInfo
-	SelectUserById(userId uint) *system.UserInfo
+type SystemUserService interface {
+	SelectUserList(page *commonBO.CommonPage) []*systemDTO.SystemUserInfoDTO
+	SelectUserById(userId uint) *systemDTO.SystemUserInfoDTO
 }

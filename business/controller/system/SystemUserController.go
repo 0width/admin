@@ -1,10 +1,10 @@
 package system
 
 import (
-	"admin/business/pogo/bo/common"
-	"admin/business/pogo/bo/system/user"
-	"admin/business/service/system"
-	"admin/utils"
+	"admin/business/common"
+	commonBO "admin/business/pogo/bo/common"
+	systemBO "admin/business/pogo/bo/system"
+	SystemService "admin/business/service/system"
 
 	"github.com/sirupsen/logrus"
 
@@ -13,8 +13,8 @@ import (
 )
 
 func init() {
-	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup, g *gin.Engine) *UserController {
-		userController := &UserController{}
+	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup, g *gin.Engine) *SystemUserController {
+		userController := &SystemUserController{}
 		sysUser := authRouter.Group("/system/user")
 		{
 			sysUser.GET("/list", userController.userList)
@@ -25,13 +25,13 @@ func init() {
 	}, "authRouter")
 }
 
-type UserController struct {
-	UserService system.UserService `autowire:""`
-	Logger      *logrus.Logger     `autowire:""`
+type SystemUserController struct {
+	UserService SystemService.SystemUserService `autowire:""`
+	Logger      *logrus.Logger                  `autowire:""`
 }
 
-func (this *UserController) userList(ctx *gin.Context) {
-	var page common.Page
+func (this *SystemUserController) userList(ctx *gin.Context) {
+	var page commonBO.CommonPage
 	if err := ctx.BindQuery(&page); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": "401",
@@ -45,7 +45,7 @@ func (this *UserController) userList(ctx *gin.Context) {
 	})
 }
 
-func (this *UserController) userInfo(ctx *gin.Context) {
+func (this *SystemUserController) userInfo(ctx *gin.Context) {
 	res := this.UserService.SelectUserById(ctx.GetUint("userId"))
 	ctx.SecureJSON(200, gin.H{
 		"code": 200,
@@ -53,12 +53,12 @@ func (this *UserController) userInfo(ctx *gin.Context) {
 	})
 }
 
-func (this *UserController) addUser(ctx *gin.Context) {
-	var request user.UserInfo
+func (this *SystemUserController) addUser(ctx *gin.Context) {
+	var request systemBO.SystemUserInfoBO
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 400,
-			"msg":  utils.GetError(err, request),
+			"msg":  common.GetError(err, request),
 		})
 		return
 	}

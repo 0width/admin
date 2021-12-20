@@ -1,5 +1,5 @@
-package system
+package SystemService
 
-type LoginService interface {
+type SystemLoginService interface {
 	Login(userName, Password string) (string, error)
 }

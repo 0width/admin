@@ -2,8 +2,8 @@ package jwt
 
 import (
 	"admin/business/common/constant"
-	"admin/business/service/common"
-	"admin/business/service/common/impl"
+	commonService "admin/business/service/common"
+	commonServiceImpl "admin/business/service/common/impl"
 	"strconv"
 	"time"
 
@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	gc.RegisterNameBeanFn("jwt", func(jwtService common.JwtService, authService common.AuthService, jwtConfig JwtConfig) gin.HandlerFunc {
+	gc.RegisterNameBeanFn("jwt", func(jwtService commonService.CommonJwtService, authService commonService.CommonAuthService, jwtConfig JwtConfig) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			token := ctx.Request.Header.Get("x-token")
 			if token == "" {
@@ -25,7 +25,7 @@ func init() {
 			}
 			claims, err := jwtService.ParseToken(token, jwtConfig.Key)
 			if err != nil {
-				if err == impl.TokenExpired {
+				if err == commonServiceImpl.TokenExpired {
 					ctx.JSON(200, gin.H{
 						"code": 401,
 						"msg":  "授权已过期",
