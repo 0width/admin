@@ -10,18 +10,18 @@ import (
 )
 
 func init() {
-	gc.RegisterBeanFn(func(g *gin.Engine) *SystemLoginController {
-		l := &SystemLoginController{}
+	gc.RegisterBeanFn(func(g *gin.Engine) *LoginController {
+		l := &LoginController{}
 		g.POST("/system/user/login", l.login)
 		return l
 	})
 }
 
-type SystemLoginController struct {
+type LoginController struct {
 	LoginService SystemService.SystemLoginService `autowire:""`
 }
 
-func (this *SystemLoginController) login(ctx *gin.Context) {
+func (this *LoginController) login(ctx *gin.Context) {
 	request := systemBO.SystemLoginBO{}
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{

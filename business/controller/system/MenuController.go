@@ -9,8 +9,8 @@ import (
 )
 
 func init() {
-	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup) *SystemMenuController {
-		menuController := &SystemMenuController{}
+	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup) *MenuController {
+		menuController := &MenuController{}
 		gr := authRouter.Group("/system/menu")
 		{
 			gr.GET("/list", menuController.list)
@@ -19,11 +19,11 @@ func init() {
 	}, "authRouter")
 }
 
-type SystemMenuController struct {
+type MenuController struct {
 	MenuService SystemService.SystemMenuService `autowire:""`
 }
 
-func (this *SystemMenuController) list(ctx *gin.Context) {
+func (this *MenuController) list(ctx *gin.Context) {
 	var res []*systemDTO.SystemMenuInfoDTO
 	res = this.MenuService.SelectMenuList(ctx.GetUint("userId"))
 	ctx.JSON(200, gin.H{
