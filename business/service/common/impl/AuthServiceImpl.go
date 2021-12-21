@@ -11,17 +11,17 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(CommonAuthServiceImpl)).Export((*commonService.CommonAuthService)(nil))
+	gc.RegisterBean(new(AuthServiceImpl)).Export((*commonService.AuthService)(nil))
 }
 
-type CommonAuthServiceImpl struct {
+type AuthServiceImpl struct {
 	Db          *gorm.DB      `autowire:""`
 	PermPrefix  string        `value:"${authFilter.prefix}"`
 	Expire      int           `value:"${jwt.expire}"`
 	RedisClient *redis.Client `autowire:""`
 }
 
-func (this *CommonAuthServiceImpl) CachePerms(userId uint) {
+func (this *AuthServiceImpl) CachePerms(userId uint) {
 	perms := []string{}
 	this.Db.Table("user_role a").
 		Joins("left join role_menu b on a.role_id = b.role_id").

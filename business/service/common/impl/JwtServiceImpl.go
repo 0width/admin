@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(CommonJwtServiceImpl)).Export((*commonService.CommonJwtService)(nil))
+	gc.RegisterBean(new(JwtServiceImpl)).Export((*commonService.JwtService)(nil))
 }
 
 var (
@@ -21,15 +21,15 @@ var (
 	TokenInvalid     = errors.New("Couldn't handle this token")
 )
 
-type CommonJwtServiceImpl struct {
+type JwtServiceImpl struct {
 }
 
-func (CommonJwtServiceImpl) CreateToken(claims commonService.JwtCliams, key string) (string, error) {
+func (JwtServiceImpl) CreateToken(claims commonService.JwtCliams, key string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(key))
 }
 
-func (this *CommonJwtServiceImpl) CreateTokenByOldToken(oldToken, key string, claims commonService.JwtCliams) (string, error) {
+func (this *JwtServiceImpl) CreateTokenByOldToken(oldToken, key string, claims commonService.JwtCliams) (string, error) {
 	group := &singleflight.Group{}
 	v, err, _ := group.Do("JWT:"+oldToken, func() (interface{}, error) {
 		return this.CreateToken(claims, key)
@@ -37,7 +37,7 @@ func (this *CommonJwtServiceImpl) CreateTokenByOldToken(oldToken, key string, cl
 	return v.(string), err
 }
 
-func (this *CommonJwtServiceImpl) ParseToken(tokenString, key string) (*commonService.JwtCliams, error) {
+func (this *JwtServiceImpl) ParseToken(tokenString, key string) (*commonService.JwtCliams, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &commonService.JwtCliams{}, func(token *jwt.Token) (i interface{}, e error) {
 		return []byte(key), nil
 	})

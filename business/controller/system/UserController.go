@@ -19,19 +19,19 @@ func init() {
 		{
 			sysUser.GET("/list", userController.userList)
 			sysUser.GET("/info", userController.userInfo)
-			sysUser.PUT("/add", userController.addUser)
+			sysUser.POST("/add", userController.addUser)
 		}
 		return userController
 	}, "authRouter")
 }
 
 type UserController struct {
-	UserService SystemService.SystemUserService `autowire:""`
-	Logger      *logrus.Logger                  `autowire:""`
+	UserService SystemService.UserService `autowire:""`
+	Logger      *logrus.Logger            `autowire:""`
 }
 
 func (this *UserController) userList(ctx *gin.Context) {
-	var page commonBO.CommonPage
+	var page commonBO.Page
 	if err := ctx.BindQuery(&page); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": "401",
@@ -54,7 +54,7 @@ func (this *UserController) userInfo(ctx *gin.Context) {
 }
 
 func (this *UserController) addUser(ctx *gin.Context) {
-	var request systemBO.SystemUserInfoBO
+	var request systemBO.UserInfo
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 400,

@@ -20,11 +20,11 @@ func init() {
 }
 
 type MenuController struct {
-	MenuService SystemService.SystemMenuService `autowire:""`
+	MenuService SystemService.MenuService `autowire:""`
 }
 
 func (this *MenuController) list(ctx *gin.Context) {
-	var res []*systemDTO.SystemMenuInfoDTO
+	var res []*systemDTO.MenuInfo
 	res = this.MenuService.SelectMenuList(ctx.GetUint("userId"))
 	ctx.JSON(200, gin.H{
 		"code": 200,

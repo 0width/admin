@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	gc.RegisterNameBeanFn("jwt", func(jwtService commonService.CommonJwtService, authService commonService.CommonAuthService, jwtConfig JwtConfig) gin.HandlerFunc {
+	gc.RegisterNameBeanFn("jwt", func(jwtService commonService.JwtService, authService commonService.AuthService, jwtConfig JwtConfig) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			token := ctx.Request.Header.Get("x-token")
 			if token == "" {

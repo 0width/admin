@@ -5,7 +5,7 @@ import (
 	systemDTO "admin/business/pogo/dto/system"
 )
 
-type SystemUserService interface {
-	SelectUserList(page *commonBO.CommonPage) []*systemDTO.SystemUserInfoDTO
-	SelectUserById(userId uint) *systemDTO.SystemUserInfoDTO
+type UserService interface {
+	SelectUserList(page *commonBO.Page) []*systemDTO.UserInfo
+	SelectUserById(userId uint) *systemDTO.UserInfo
 }

@@ -18,11 +18,11 @@ func init() {
 }
 
 type LoginController struct {
-	LoginService SystemService.SystemLoginService `autowire:""`
+	LoginService SystemService.LoginService `autowire:""`
 }
 
 func (this *LoginController) login(ctx *gin.Context) {
-	request := systemBO.SystemLoginBO{}
+	request := systemBO.Login{}
 	if err := ctx.BindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 400,

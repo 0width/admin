@@ -12,7 +12,7 @@ type JwtCliams struct {
 	jwt.StandardClaims
 }
 
-type CommonJwtService interface {
+type JwtService interface {
 	CreateToken(claims JwtCliams, key string) (string, error)
 	CreateTokenByOldToken(oldToken, key string, claims JwtCliams) (string, error)
 	ParseToken(tokenString, key string) (*JwtCliams, error)

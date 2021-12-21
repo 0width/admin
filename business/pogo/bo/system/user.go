@@ -1,6 +1,6 @@
 package systemBO
 
-type SystemUserInfoBO struct {
+type UserInfo struct {
 	Name     string `json:"name" binding:"required" required_err:"用户名不能为空"`
 	Password string `json:"password" binding:"required" required_err:"密码不能为空"`
 	NickName string `json:"nick_name"`

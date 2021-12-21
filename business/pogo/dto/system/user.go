@@ -1,6 +1,6 @@
 package systemDTO
 
-type SystemUserInfoDTO struct {
+type UserInfo struct {
 	ID       uint   `json:"id"`
 	Name     string `json:"name"`
 	NickName string `json:"nick_name"`

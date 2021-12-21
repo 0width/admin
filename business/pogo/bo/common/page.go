@@ -1,6 +1,6 @@
 package commonBO
 
-type CommonPage struct {
+type Page struct {
 	Page     int `form:"page"`
 	PageSize int `form:"pageSize"`
 }

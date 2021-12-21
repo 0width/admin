@@ -8,10 +8,10 @@ import (
 func init() {
 	gc.RegisterBean(new(Entity)).Init(func(entity *Entity) {
 		if entity.AutoMigrate {
-			_ = entity.Db.AutoMigrate(&SystemMenuEntity{})
-			_ = entity.Db.AutoMigrate(&SystemRoleEntity{})
-			_ = entity.Db.AutoMigrate(&SystemUserEntity{})
-			_ = entity.Db.AutoMigrate(&SystemPostEntity{})
+			_ = entity.Db.AutoMigrate(&Menu{})
+			_ = entity.Db.AutoMigrate(&Role{})
+			_ = entity.Db.AutoMigrate(&User{})
+			_ = entity.Db.AutoMigrate(&Post{})
 		}
 	})
 }

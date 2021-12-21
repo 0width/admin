@@ -10,15 +10,15 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(SystemMenuServiceImpl)).Export((*SystemService.SystemMenuService)(nil))
+	gc.RegisterBean(new(MenuServiceImpl)).Export((*SystemService.MenuService)(nil))
 }
 
-type SystemMenuServiceImpl struct {
+type MenuServiceImpl struct {
 	Db *gorm.DB `autowire:""`
 }
 
-func (this *SystemMenuServiceImpl) SelectMenuList(userId uint) []*systemDTO.SystemMenuInfoDTO {
-	var menuInfos []*systemDTO.SystemMenuInfoDTO
+func (this *MenuServiceImpl) SelectMenuList(userId uint) []*systemDTO.MenuInfo {
+	var menuInfos []*systemDTO.MenuInfo
 	this.Db.Table("menu").Where("id in (?)",
 		this.Db.Table("user_role a").Select("b.menu_id").
 			Joins("left join role_menu b on a.role_id = b.role_id").

@@ -2,7 +2,7 @@ package systemEntity
 
 import "gorm.io/gorm"
 
-type SystemUserEntity struct {
+type User struct {
 	gorm.Model
 	Name     string `gorm:"size:255;index"`
 	Password string `gorm:"size:64" json:"-"`
@@ -14,10 +14,10 @@ type SystemUserEntity struct {
 	Avatar   string `gorm:"size:255"`
 	Remark   string `gorm:"size:1023;comment:备注"`
 	DeptId   uint   `gorm:"comment:部门ID"`
-	Dept     *SystemDeptEntity
-	Roles    []*SystemRoleEntity `gorm:"many2many:user_role"`
+	Dept     *Dept
+	Roles    []*Role `gorm:"many2many:user_role"`
 }
 
-func (SystemUserEntity) TableName() string {
+func (User) TableName() string {
 	return "user"
 }

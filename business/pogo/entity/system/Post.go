@@ -2,11 +2,11 @@ package systemEntity
 
 import "gorm.io/gorm"
 
-// SystemPostEntity 岗位表
-type SystemPostEntity struct {
+// Post 岗位表
+type Post struct {
 	gorm.Model
 }
 
-func (SystemPostEntity) TableName() string {
+func (Post) TableName() string {
 	return "post"
 }

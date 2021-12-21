@@ -12,25 +12,25 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(SystemUserServiceImpl)).Export((*SystemService.SystemUserService)(nil)).Init(func(impl *SystemUserServiceImpl) {
+	gc.RegisterBean(new(UserServiceImpl)).Export((*SystemService.UserService)(nil)).Init(func(impl *UserServiceImpl) {
 
 	})
 }
 
-type SystemUserServiceImpl struct {
+type UserServiceImpl struct {
 	Db *gorm.DB `autowire:""`
 }
 
-func (this *SystemUserServiceImpl) SelectUserList(page *commonBO.CommonPage) []*systemDTO.SystemUserInfoDTO {
-	var users []*systemDTO.SystemUserInfoDTO
-	this.Db.Model(systemEntity.SystemUserEntity{}).
+func (this *UserServiceImpl) SelectUserList(page *commonBO.Page) []*systemDTO.UserInfo {
+	var users []*systemDTO.UserInfo
+	this.Db.Model(systemEntity.User{}).
 		Scopes(common.Paginate(page.Page, page.PageSize)).Find(&users)
 	return users
 }
 
-func (this *SystemUserServiceImpl) SelectUserById(id uint) *systemDTO.SystemUserInfoDTO {
-	var user *systemDTO.SystemUserInfoDTO
-	this.Db.Model(systemEntity.SystemUserEntity{}).
+func (this *UserServiceImpl) SelectUserById(id uint) *systemDTO.UserInfo {
+	var user *systemDTO.UserInfo
+	this.Db.Model(systemEntity.User{}).
 		Select("id, name, nick_name, email, phone, sex, avatar, remark").
 		Where("status = 0").Find(&user, id)
 	return user
