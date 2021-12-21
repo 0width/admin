@@ -3,6 +3,8 @@ package common
 import (
 	"reflect"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 )
@@ -48,4 +50,32 @@ func GetError(errors interface{}, r interface{}) string {
 		return fieldError.Field() + ":" + fieldError.Tag()
 	}
 	return ""
+}
+
+func ValidError(errors interface{}, r interface{}, ctx *gin.Context) {
+	ctx.JSON(200, gin.H{
+		"code": 400,
+		"msg":  GetError(errors, r),
+	})
+}
+
+func SuccessData(ctx *gin.Context, data interface{}) {
+	ctx.JSON(200, gin.H{
+		"code": 200,
+		"data": data,
+	})
+}
+
+func SuccessMsg(ctx *gin.Context, msg string) {
+	ctx.JSON(200, gin.H{
+		"code": 200,
+		"msg":  msg,
+	})
+}
+
+func InternalError(ctx *gin.Context, msg string) {
+	ctx.JSON(200, gin.H{
+		"code": 500,
+		"msg":  msg,
+	})
 }
