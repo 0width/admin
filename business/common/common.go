@@ -31,7 +31,7 @@ func GetError(errors interface{}, r interface{}) string {
 	var errs validator.ValidationErrors
 	var ok bool
 	if errs, ok = errors.(validator.ValidationErrors); !ok {
-		return "请求参数或请求类型有误"
+		return "请求参数或请求类型有误: " + errors.(error).Error()
 	}
 	s := reflect.TypeOf(r)
 	for _, fieldError := range errs {

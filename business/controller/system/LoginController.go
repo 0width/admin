@@ -23,7 +23,7 @@ type LoginController struct {
 
 func (this *LoginController) login(ctx *gin.Context) {
 	request := systemBO.Login{}
-	if err := ctx.BindJSON(&request); err != nil {
+	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 400,
 			"msg":  common.GetError(err, request),

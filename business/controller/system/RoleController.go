@@ -40,7 +40,7 @@ func (this *RoleController) list(ctx *gin.Context) {
 
 func (this *RoleController) add(ctx *gin.Context) {
 	var request systemBO.RoleInfo
-	if err := ctx.BindJSON(&request); err != nil {
+	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 400,
 			"msg":  common.GetError(err, request),
@@ -62,7 +62,7 @@ func (this *RoleController) add(ctx *gin.Context) {
 
 func (this *RoleController) edit(ctx *gin.Context) {
 	var request systemBO.RoleInfo
-	if err := ctx.BindJSON(&request); err != nil {
+	if err := ctx.ShouldBindJSON(&request); err != nil {
 		common.ValidError(err, request, ctx)
 		return
 	}

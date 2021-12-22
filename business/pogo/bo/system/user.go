@@ -11,3 +11,14 @@ type UserInfo struct {
 	Remark   string `json:"remark"`
 	DeptId   uint   `json:"dept_id"`
 }
+
+type UpdateUserInfo struct {
+	ID       uint   `json:"id" binding:"required" required_err:"用ID不能为空"`
+	NickName string `json:"nick_name"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Sex      int    `json:"sex"`
+	Avatar   string `json:"avatar"`
+	Remark   string `json:"remark"`
+	RoleIds  []uint `json:"roleIds"`
+}
