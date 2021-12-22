@@ -71,6 +71,7 @@ const actions = {
           const r = {
             id: c.id,
             path: c.path,
+            hidden: c.visible,
             component: cComponent,
             redirect: c.redirect,
             name: c.name,
@@ -92,6 +93,12 @@ const actions = {
             })
           }
         }
+        // 放入默认路由， 解决动态路由刷新的时候跳转404的问题
+        routes.push({
+          path: '*',
+          redirect: '/404',
+          hidden: true
+        })
         resolve(routes)
         console.log(routes)
       })

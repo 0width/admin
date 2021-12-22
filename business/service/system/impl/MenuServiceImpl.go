@@ -26,7 +26,7 @@ func (this *MenuServiceImpl) SelectMenuList(userId uint) []*systemDTO.MenuInfo {
 		this.Db.Table("user_role a").Select("b.menu_id").
 			Joins("left join role_menu b on a.role_id = b.role_id").
 			Where("a.user_id = ?", userId).Group("b.menu_id"),
-	).Where("status = 0").Order("`level` asc, `order` asc").Find(&menuInfos)
+	).Where("status = 0").Order("`parent_id` asc, `order` asc").Find(&menuInfos)
 	return menuInfos
 }
 

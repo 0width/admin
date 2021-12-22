@@ -1,6 +1,7 @@
 module.exports = {
 
   title: 'Vue Admin Template',
+  tagsView: true,
 
   /**
    * @type {boolean} true | false
