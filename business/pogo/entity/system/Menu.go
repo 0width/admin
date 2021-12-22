@@ -12,7 +12,6 @@ type Menu struct {
 	Path      string `gorm:"type:string;size:64;comment:路由path"`
 	Query     string `gorm:"type:string;size:511;comment:路由参数"`
 	Redirect  string `gorm:"type:string;size:64;comment:路由redirect"`
-	Level     int    `gorm:"type:int;size:32;comment:菜单等级"`
 	Component string `gorm:"type:string;size:64;comment:组件"`
 	Order     int    `gorm:"type:int;size:32;comment:菜单顺序"`
 	ParentId  uint   `gorm:"comment:父菜单ID"`

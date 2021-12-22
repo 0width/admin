@@ -1,6 +1,8 @@
 package system
 
 import (
+	"admin/business/common"
+	systemBO "admin/business/pogo/bo/system"
 	systemDTO "admin/business/pogo/dto/system"
 	SystemService "admin/business/service/system"
 
@@ -14,6 +16,8 @@ func init() {
 		gr := authRouter.Group("/system/menu")
 		{
 			gr.GET("/list", menuController.list)
+			gr.POST("/add", menuController.add)
+			gr.PUT("/edit", menuController.edit)
 		}
 		return menuController
 	}, "authRouter")
@@ -30,4 +34,30 @@ func (this *MenuController) list(ctx *gin.Context) {
 		"code": 200,
 		"data": res,
 	})
+}
+
+func (this *MenuController) add(ctx *gin.Context) {
+	var request systemBO.AddMenuInfo
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		common.ValidError(err, request, ctx)
+		return
+	}
+	if err := this.MenuService.InsertMenu(request); err != nil {
+		common.InternalError(ctx, err.Error())
+		return
+	}
+	common.SuccessMsg(ctx, "添加成功")
+}
+
+func (this *MenuController) edit(ctx *gin.Context) {
+	var request systemBO.EditMenuInfo
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		common.ValidError(err, request, ctx)
+		return
+	}
+	if err := this.MenuService.UpdateMenu(request); err != nil {
+		common.InternalError(ctx, err.Error())
+		return
+	}
+	common.SuccessMsg(ctx, "修改成功")
 }
