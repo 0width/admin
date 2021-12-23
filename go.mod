@@ -1,6 +1,6 @@
 module admin
 
-go 1.15
+go 1.16
 
 require (
 	git.xios.club/xios/gc v0.0.0-20211215063022-e8a8eab33164
