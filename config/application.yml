@@ -5,15 +5,15 @@ web:
 active: dev
 
 db:
-  url: root:docker-mysql-123456@tcp(hw.xios.club:3306)/admin?charset=utf8mb4&parseTime=True&loc=Local
+  url: root:123456@tcp(localhost:3306)/admin?charset=utf8mb4&parseTime=True&loc=Local
   debug: true
-  autoMigrate: false
+  autoMigrate: true
   # 是否跳过创建外键
   disableForeignKeyConstraintWhenMigrating: true
 
 redis:
-  addr: hw.xios.club:6379
-  password: docker-redis-123456
+  addr: localhost:6379
+  password: 123456
   db: 1
 
 authFilter:
