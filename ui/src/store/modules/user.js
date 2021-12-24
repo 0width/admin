@@ -1,4 +1,4 @@
-import { login, logout, getInfo, menuList } from '@/api/user'
+import { login, logout, getInfo, userMenuList } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import Layout from '@/layout'
@@ -54,14 +54,13 @@ const actions = {
   },
   menuList({ commit, state }) {
     return new Promise((resolve, reject) => {
-      menuList().then(response => {
+      userMenuList().then(response => {
         const { data } = response
         if (!data) {
           return reject('获取菜单失败')
         }
         const routes = makeRoute(data)
         resolve(routes)
-        console.log(routes)
       })
     })
   },

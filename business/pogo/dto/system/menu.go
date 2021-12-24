@@ -10,6 +10,7 @@ type MenuInfo struct {
 	Query     string `json:"query"`
 	Component string `json:"component"`
 	Order     int    `json:"order"`
+	Status    int    `json:"status"`
 	Visible   int    `json:"visible"`
 	ParentId  uint   `json:"parent_id"`
 	Remark    string `json:"remark"`

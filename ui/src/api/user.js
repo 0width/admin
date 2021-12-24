@@ -8,6 +8,13 @@ export function login(data) {
   })
 }
 
+export function userMenuList() {
+  return request({
+    url: '/system/user/menus',
+    method: 'get'
+  })
+}
+
 export function menuList() {
   return request({
     url: '/system/menu/list',

@@ -29,7 +29,7 @@ type MenuController struct {
 
 func (this *MenuController) list(ctx *gin.Context) {
 	var res []*systemDTO.MenuInfo
-	res = this.MenuService.SelectMenuList(ctx.GetUint("userId"))
+	res = this.MenuService.SelectMenuList()
 	ctx.JSON(200, gin.H{
 		"code": 200,
 		"data": res,

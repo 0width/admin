@@ -20,13 +20,19 @@ type MenuServiceImpl struct {
 	Db *gorm.DB `autowire:""`
 }
 
-func (this *MenuServiceImpl) SelectMenuList(userId uint) []*systemDTO.MenuInfo {
+func (this *MenuServiceImpl) SelectMenuListByUserId(userId uint) []*systemDTO.MenuInfo {
 	var menuInfos []*systemDTO.MenuInfo
 	this.Db.Table("menu").Where("id in (?)",
 		this.Db.Table("user_role a").Select("b.menu_id").
 			Joins("left join role_menu b on a.role_id = b.role_id").
 			Where("a.user_id = ?", userId).Group("b.menu_id"),
 	).Where("status = 0").Order("`parent_id` asc, `order` asc").Find(&menuInfos)
+	return menuInfos
+}
+
+func (this *MenuServiceImpl) SelectMenuList() []*systemDTO.MenuInfo {
+	var menuInfos []*systemDTO.MenuInfo
+	this.Db.Model(systemEntity.Menu{}).Order("`parent_id` asc, `order` asc").Find(&menuInfos)
 	return menuInfos
 }
 
