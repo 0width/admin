@@ -15,13 +15,6 @@ export function userMenuList() {
   })
 }
 
-export function menuList() {
-  return request({
-    url: '/system/menu/list',
-    method: 'get'
-  })
-}
-
 export function getInfo() {
   return request({
     url: '/system/user/info',
