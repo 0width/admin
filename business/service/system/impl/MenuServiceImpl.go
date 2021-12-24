@@ -26,7 +26,8 @@ func (this *MenuServiceImpl) SelectMenuListByUserId(userId uint) []*systemDTO.Me
 		this.Db.Table("user_role a").Select("b.menu_id").
 			Joins("left join role_menu b on a.role_id = b.role_id").
 			Where("a.user_id = ?", userId).Group("b.menu_id"),
-	).Where("status = 0").Order("`parent_id` asc, `order` asc").Find(&menuInfos)
+	).Where("status = 0").Where("type < 2").
+		Order("`parent_id` asc, `order` asc").Find(&menuInfos)
 	return menuInfos
 }
 
@@ -79,6 +80,18 @@ func (this *MenuServiceImpl) UpdateMenu(menuInfo systemBO.EditMenuInfo) error {
 		Visible:   menuInfo.Visible,
 	}
 	return this.Db.Updates(menu).Error
+}
+
+func (this *MenuServiceImpl) SelectMenuById(menuId uint) (*systemDTO.MenuInfo, error) {
+	menuInfo := &systemDTO.MenuInfo{}
+	if err := this.Db.Model(systemEntity.Menu{}).Find(menuInfo, menuId).Error; err != nil {
+		return nil, err
+	}
+	return menuInfo, nil
+}
+
+func (this *MenuServiceImpl) DeleteMenuById(menuId uint) error {
+	return this.Db.Delete(&systemEntity.Menu{}, menuId).Error
 }
 
 func (this *MenuServiceImpl) hasParentId(parentId uint) bool {
