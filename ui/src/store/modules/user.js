@@ -59,46 +59,7 @@ const actions = {
         if (!data) {
           return reject('获取菜单失败')
         }
-        const routes = []
-        while (data.length > 0) {
-          const c = data.shift()
-          let cComponent = null
-          if (c.parent_id === 0) {
-            cComponent = Layout
-          } else {
-            cComponent = loadComponent(c.component)
-          }
-          const r = {
-            id: c.id,
-            path: c.path,
-            hidden: c.visible,
-            component: cComponent,
-            redirect: c.redirect,
-            name: c.name,
-            meta: {
-              title: c.title,
-              icon: c.icon
-            }
-          }
-          if (c.parent_id === 0) {
-            routes.push(r)
-          } else {
-            routes.forEach((v, i, arr) => {
-              if (c.parent_id === v.id) {
-                if (!v.children) {
-                  v['children'] = []
-                }
-                v.children.push(r)
-              }
-            })
-          }
-        }
-        // 放入默认路由， 解决动态路由刷新的时候跳转404的问题
-        routes.push({
-          path: '*',
-          redirect: '/404',
-          hidden: true
-        })
+        const routes = makeRoute(data)
         resolve(routes)
         console.log(routes)
       })
@@ -147,6 +108,50 @@ const actions = {
       resolve()
     })
   }
+}
+
+function makeRoute(menuList) {
+  const routes = []
+  while (menuList.length > 0) {
+    const c = menuList.shift()
+    let cComponent = null
+    if (c.parent_id === 0) {
+      cComponent = Layout
+    } else {
+      cComponent = loadComponent(c.component)
+    }
+    const r = {
+      id: c.id,
+      path: c.path,
+      hidden: c.visible,
+      component: cComponent,
+      redirect: c.redirect,
+      name: c.name,
+      meta: {
+        title: c.title,
+        icon: c.icon
+      }
+    }
+    if (c.parent_id === 0) {
+      routes.push(r)
+    } else {
+      routes.forEach((v, i, arr) => {
+        if (c.parent_id === v.id) {
+          if (!v.children) {
+            v['children'] = []
+          }
+          v.children.push(r)
+        }
+      })
+    }
+  }
+  // 放入默认路由， 解决动态路由刷新的时候跳转404的问题
+  routes.push({
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  })
+  return routes
 }
 
 export default {
