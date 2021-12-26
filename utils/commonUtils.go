@@ -19,9 +19,3 @@ func Paginate(page, pageSize int) func(db *gorm.DB) *gorm.DB {
 		return db.Offset(offset).Limit(pageSize)
 	}
 }
-
-func RecordMigrate() func(db *gorm.DB) *gorm.DB {
-	return func(db *gorm.DB) *gorm.DB {
-		return db.Debug()
-	}
-}
