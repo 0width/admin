@@ -8,7 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//go:generate go run auto_imports/auto_imports.go
+//go:generate go run generate/auto_imports/auto_imports.go
+//go:generate go run generate/migrate/migrate.go
 func main() {
 	server := gin.Default()
 
