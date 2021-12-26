@@ -1,17 +1,33 @@
 package main
 
 import (
+	"admin/component/middleware"
 	"admin/config"
+	"embed"
+	"io/fs"
+	"net/http"
 	"strconv"
 
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
 )
 
+//go:embed ui/dist
+var staticFS embed.FS
+
 //go:generate go run generate/auto_imports/auto_imports.go
-//go:generate go run generate/migrate/migrate.go
 func main() {
 	server := gin.Default()
+	static, err := fs.Sub(staticFS, "ui/dist")
+	if err != nil {
+		panic(err)
+	}
+	// 注意： 前端项目 publicPath 也要设置为 /public
+	staticRoute := server.Group("/public").Use(middleware.NotModified())
+	staticRoute.StaticFS("/", http.FS(static))
+	server.GET("/", func(ctx *gin.Context) {
+		ctx.Redirect(301, "/public")
+	})
 
 	gc.RegisterBean(server)
 

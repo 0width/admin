@@ -6,7 +6,10 @@ import (
 )
 
 type MenuService interface {
-	SelectMenuList(userId uint) []*systemDTO.MenuInfo
+	SelectMenuListByUserId(userId uint) []*systemDTO.MenuInfo
+	SelectMenuList() []*systemDTO.MenuInfo
 	InsertMenu(info systemBO.AddMenuInfo) error
 	UpdateMenu(info systemBO.EditMenuInfo) error
+	SelectMenuById(menuId uint) (*systemDTO.MenuInfo, error)
+	DeleteMenuById(menuId uint) error
 }

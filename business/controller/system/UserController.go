@@ -4,6 +4,7 @@ import (
 	"admin/business/common"
 	commonBO "admin/business/pogo/bo/common"
 	systemBO "admin/business/pogo/bo/system"
+	systemDTO "admin/business/pogo/dto/system"
 	SystemService "admin/business/service/system"
 
 	"github.com/sirupsen/logrus"
@@ -17,6 +18,7 @@ func init() {
 		userController := &UserController{}
 		sysUser := authRouter.Group("/system/user")
 		{
+			sysUser.GET("/menus", userController.menus)
 			sysUser.GET("/list", userController.userList)
 			sysUser.GET("/info", userController.userInfo)
 			sysUser.POST("/add", userController.addUser)
@@ -28,6 +30,7 @@ func init() {
 
 type UserController struct {
 	UserService SystemService.UserService `autowire:""`
+	MenuService SystemService.MenuService `autowire:""`
 	Logger      *logrus.Logger            `autowire:""`
 }
 
@@ -78,4 +81,13 @@ func (this *UserController) edit(ctx *gin.Context) {
 		return
 	}
 	common.SuccessMsg(ctx, "设置成功")
+}
+
+func (this *UserController) menus(ctx *gin.Context) {
+	var res []*systemDTO.MenuInfo
+	res = this.MenuService.SelectMenuListByUserId(ctx.GetUint("userId"))
+	ctx.JSON(200, gin.H{
+		"code": 200,
+		"data": res,
+	})
 }
