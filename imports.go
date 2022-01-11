@@ -9,7 +9,6 @@ import (
 	_ "admin/business/service/system/impl"
 	_ "admin/component/cache/redis"
 	_ "admin/component/db/mysql"
-	_ "admin/component/jwt"
 	_ "admin/component/logger"
 	_ "admin/config"
 )

@@ -23,6 +23,7 @@ jwt:
   expire: 86400
   key: ljqlwjerqweroqueroqewr
   bufferTime: 3600
+  prefix: "token:"
 
 log:
   level: info

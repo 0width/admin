@@ -5,10 +5,9 @@ import (
 )
 
 type JwtCliams struct {
-	UserId     uint
-	Username   string
-	NickName   string
-	BufferTime int64
+	UserId   uint
+	Username string
+	NickName string
 	jwt.StandardClaims
 }
 

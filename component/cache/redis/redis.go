@@ -2,7 +2,7 @@ package redis
 
 import (
 	"git.xios.club/xios/gc"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 )
 
 type RedisConfig struct {

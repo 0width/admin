@@ -4,12 +4,14 @@ import (
 	systemEntity "admin/business/pogo/entity/system"
 	commonService "admin/business/service/common"
 	SystemService "admin/business/service/system"
+	"context"
+	"encoding/json"
+	"strconv"
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 
 	"git.xios.club/xios/gc"
-	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -24,6 +26,7 @@ type LoginServiceImpl struct {
 	Key         string                    `value:"${jwt.key}"`
 	BufferTime  int64                     `value:"${jwt.bufferTime}"`
 	Expire      int64                     `value:"${jwt.expire}"`
+	JwtPrefix   string                    `value:"${jwt.prefix}"`
 	Db          *gorm.DB                  `autowire:""`
 	RedisClient *redis.Client             `autowire:""`
 	PermPrefix  string                    `value:"${authFilter.prefix}"`
@@ -41,13 +44,18 @@ func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
 
 	this.AuthService.CachePerms(user.ID)
 
-	return this.JwtService.CreateToken(commonService.JwtCliams{
-		UserId:     user.ID,
-		Username:   user.Name,
-		NickName:   user.NickName,
-		BufferTime: this.BufferTime,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Unix() + this.Expire,
-		},
-	}, this.Key)
+	cliams := commonService.JwtCliams{
+		UserId:   user.ID,
+		Username: user.Name,
+		NickName: user.NickName,
+	}
+
+	cliamsData, _ := json.Marshal(cliams)
+	result, err := this.RedisClient.Set(context.Background(), this.JwtPrefix+strconv.Itoa(int(user.ID)), cliamsData,
+		time.Duration(this.Expire)*time.Second).Result()
+	if err != nil {
+		return result, err
+	}
+
+	return this.JwtService.CreateToken(cliams, this.Key)
 }

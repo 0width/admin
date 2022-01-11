@@ -1,11 +1,12 @@
 package authFilter
 
 import (
+	"context"
 	"strconv"
 
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 )
 
 type AuthFilterConfig struct {
@@ -22,7 +23,8 @@ func init() {
 		}
 		return func(ctx *gin.Context) {
 			if !config.SuperManagers[ctx.GetString("userName")] {
-				res, err := redisClient.SIsMember(config.Prefix+strconv.Itoa(int(ctx.GetUint("userId"))), ctx.FullPath()).Result()
+				background := context.Background()
+				res, err := redisClient.SIsMember(background, config.Prefix+strconv.Itoa(int(ctx.GetUint("userId"))), ctx.FullPath()).Result()
 				if err != nil {
 					ctx.AbortWithStatusJSON(200, gin.H{
 						"code": 500,

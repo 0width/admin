@@ -2,11 +2,12 @@ package commonServiceImpl
 
 import (
 	commonService "admin/business/service/common"
+	"context"
 	"strconv"
 	"time"
 
 	"git.xios.club/xios/gc"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 	"gorm.io/gorm"
 )
 
@@ -30,6 +31,7 @@ func (this *AuthServiceImpl) CachePerms(userId uint) {
 		Group("c.perm").Pluck("c.perm", &perms)
 
 	key := this.PermPrefix + strconv.Itoa(int(userId))
-	this.RedisClient.SAdd(key, perms)
-	this.RedisClient.Expire(key, time.Duration(this.Expire)*time.Second)
+	background := context.Background()
+	this.RedisClient.SAdd(background, key, perms)
+	this.RedisClient.Expire(background, key, time.Duration(this.Expire)*time.Second)
 }
