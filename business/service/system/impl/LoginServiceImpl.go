@@ -2,8 +2,8 @@ package SystemServiceImpl
 
 import (
 	systemEntity "admin/business/pogo/entity/system"
-	commonService "admin/business/service/common"
 	SystemService "admin/business/service/system"
+	commonService "admin/common/service"
 	"context"
 	"encoding/json"
 	"strconv"

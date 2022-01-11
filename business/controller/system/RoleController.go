@@ -1,9 +1,9 @@
 package system
 
 import (
-	"admin/business/common"
 	systemBO "admin/business/pogo/bo/system"
 	SystemService "admin/business/service/system"
+	"admin/common"
 
 	"git.xios.club/xios/gc"
 	"github.com/gin-gonic/gin"

@@ -1,9 +1,9 @@
 package authFilter
 
 import (
-	"admin/business/common/constant"
-	commonService "admin/business/service/common"
-	commonServiceImpl "admin/business/service/common/impl"
+	"admin/common/constant"
+	commonService "admin/common/service"
+	commonServiceImpl "admin/common/service/impl"
 	"context"
 	"strconv"
 
@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	gc.RegisterNameBeanFn("jwt",
+	gc.RegisterNameBeanFn("jwtFilter",
 		func(jwtService commonService.JwtService, authService commonService.AuthService,
 			jwtConfig JwtConfig, redisClient *redis.Client) gin.HandlerFunc {
 

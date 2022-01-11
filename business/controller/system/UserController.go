@@ -1,11 +1,11 @@
 package system
 
 import (
-	"admin/business/common"
 	commonBO "admin/business/pogo/bo/common"
 	systemBO "admin/business/pogo/bo/system"
 	systemDTO "admin/business/pogo/dto/system"
 	SystemService "admin/business/service/system"
+	"admin/common"
 
 	"github.com/sirupsen/logrus"
 

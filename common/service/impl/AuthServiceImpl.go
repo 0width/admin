@@ -1,7 +1,7 @@
 package commonServiceImpl
 
 import (
-	commonService "admin/business/service/common"
+	commonService "admin/common/service"
 	"context"
 	"strconv"
 	"time"

@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	git.xios.club/xios/gc v0.0.0-20211215063022-e8a8eab33164
-	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/emirpasic/gods v1.12.0
 	github.com/gin-gonic/gin v1.7.7
@@ -14,7 +13,6 @@ require (
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.17.0 // indirect
 	github.com/sirupsen/logrus v1.2.0
-	github.com/tidwall/gjson v1.12.1
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9
 	golang.org/x/sys v0.0.0-20211019181941-9d821ace8654 // indirect

@@ -10,5 +10,5 @@ func init() {
 		group := g.Group("/")
 		group.Use(jwtMiddleware, authFilter)
 		return group
-	}, "jwt", "authFilter")
+	}, "jwtFilter", "authFilter")
 }
