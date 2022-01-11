@@ -8,6 +8,7 @@ db:
   url: root:123456@tcp(localhost:3306)/admin?charset=utf8mb4&parseTime=True&loc=Local
   debug: true
   autoMigrate: true
+  migrateFile: sql/migrate
   # 是否跳过创建外键
   disableForeignKeyConstraintWhenMigrating: true
 

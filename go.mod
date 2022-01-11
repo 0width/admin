@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	git.xios.club/xios/gc v0.0.0-20211215063022-e8a8eab33164
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/emirpasic/gods v1.12.0
 	github.com/gin-gonic/gin v1.7.7

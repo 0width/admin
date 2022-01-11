@@ -15,7 +15,7 @@ import (
 //go:embed ui/dist
 var staticFS embed.FS
 
-//go:generate go run auto_imports/auto_imports.go
+//go:generate go run generate/auto_imports/auto_imports.go
 func main() {
 	server := gin.Default()
 	static, err := fs.Sub(staticFS, "ui/dist")

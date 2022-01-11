@@ -7,13 +7,13 @@ type MenuCommon struct {
 	Path      string `json:"path" binding:"required" required_err:"Path不能为空"`
 	Redirect  string `json:"redirect"`
 	Query     string `json:"query"`
-	Component string `json:"component" binding:"required_with=ParentId,required_unless=Type 3" err:"组件不能为空"`
+	Component string `json:"component" binding:"required_if=Type 1" err:"组件不能为空"`
 	Order     int    `json:"order"`
 	Visible   int    `json:"visible"`
 	ParentId  uint   `json:"parent_id"`
 	Remark    string `json:"remark"`
-	Perm      string `json:"perm" binding:"required" required_err:"权限不能为空"`
-	Type      int    `json:"type" binding:"required" required_err:"类型不能为空"`
+	Perm      string `json:"perm" binding:"required_unless=Type 0" err:"权限不能为空"`
+	Type      int    `json:"type"`
 }
 
 type AddMenuInfo struct {
