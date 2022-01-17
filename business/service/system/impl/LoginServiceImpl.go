@@ -5,13 +5,13 @@ import (
 	SystemService "admin/business/service/system"
 	commonService "admin/common/service"
 	"context"
-	"encoding/json"
 	"strconv"
 	"time"
 
 	"github.com/go-redis/redis/v8"
 
 	"git.xios.club/xios/gc"
+	jsonIter "github.com/json-iterator/go"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -50,7 +50,7 @@ func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
 		NickName: user.NickName,
 	}
 
-	cliamsData, _ := json.Marshal(cliams)
+	cliamsData, _ := jsonIter.Marshal(cliams)
 	result, err := this.RedisClient.Set(context.Background(), this.JwtPrefix+strconv.Itoa(int(user.ID)), cliamsData,
 		time.Duration(this.Expire)*time.Second).Result()
 	if err != nil {
