@@ -2,7 +2,7 @@ package system
 
 import (
 	systemBO "admin/business/pogo/bo/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	"admin/common"
 
 	"git.xios.club/xios/gc"
@@ -18,7 +18,7 @@ func init() {
 }
 
 type LoginController struct {
-	LoginService SystemService.LoginService `autowire:""`
+	LoginService systemService.LoginService `autowire:""`
 }
 
 func (this *LoginController) login(ctx *gin.Context) {

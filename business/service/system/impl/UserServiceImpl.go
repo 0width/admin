@@ -1,11 +1,11 @@
-package SystemServiceImpl
+package systemServiceImpl
 
 import (
 	commonBO "admin/business/pogo/bo/common"
 	systemBO "admin/business/pogo/bo/system"
 	systemDTO "admin/business/pogo/dto/system"
 	systemEntity "admin/business/pogo/entity/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	"admin/utils"
 
 	"git.xios.club/xios/gc"
@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(UserServiceImpl)).Export((*SystemService.UserService)(nil)).Init(func(impl *UserServiceImpl) {
+	gc.RegisterBean(new(UserServiceImpl)).Export((*systemService.UserService)(nil)).Init(func(impl *UserServiceImpl) {
 
 	})
 }

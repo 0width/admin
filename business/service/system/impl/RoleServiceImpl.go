@@ -1,10 +1,10 @@
-package SystemServiceImpl
+package systemServiceImpl
 
 import (
 	systemBO "admin/business/pogo/bo/system"
 	systemDTO "admin/business/pogo/dto/system"
 	systemEntity "admin/business/pogo/entity/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	"errors"
 
 	"git.xios.club/xios/gc"
@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(RoleServiceImpl)).Export((*SystemService.RoleService)(nil))
+	gc.RegisterBean(new(RoleServiceImpl)).Export((*systemService.RoleService)(nil))
 }
 
 type RoleServiceImpl struct {

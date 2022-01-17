@@ -1,4 +1,4 @@
-package SystemService
+package systemService
 
 import (
 	commonBO "admin/business/pogo/bo/common"

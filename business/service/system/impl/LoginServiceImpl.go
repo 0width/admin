@@ -1,8 +1,8 @@
-package SystemServiceImpl
+package systemServiceImpl
 
 import (
 	systemEntity "admin/business/pogo/entity/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	commonService "admin/common/service"
 	"context"
 	"strconv"
@@ -17,7 +17,7 @@ import (
 )
 
 func init() {
-	gc.RegisterBean(new(LoginServiceImpl)).Export((*SystemService.LoginService)(nil))
+	gc.RegisterBean(new(LoginServiceImpl)).Export((*systemService.LoginService)(nil))
 }
 
 type LoginServiceImpl struct {

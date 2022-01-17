@@ -2,7 +2,7 @@ package system
 
 import (
 	systemBO "admin/business/pogo/bo/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	"admin/common"
 
 	"git.xios.club/xios/gc"
@@ -21,7 +21,7 @@ func init() {
 }
 
 type RoleController struct {
-	RoleService SystemService.RoleService `autowire:""`
+	RoleService systemService.RoleService `autowire:""`
 }
 
 func (this *RoleController) list(ctx *gin.Context) {

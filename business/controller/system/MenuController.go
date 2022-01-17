@@ -3,7 +3,7 @@ package system
 import (
 	systemBO "admin/business/pogo/bo/system"
 	systemDTO "admin/business/pogo/dto/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	"admin/common"
 	"strconv"
 
@@ -27,7 +27,7 @@ func init() {
 }
 
 type MenuController struct {
-	MenuService SystemService.MenuService `autowire:""`
+	MenuService systemService.MenuService `autowire:""`
 }
 
 func (this *MenuController) list(ctx *gin.Context) {

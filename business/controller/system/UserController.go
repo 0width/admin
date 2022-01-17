@@ -4,7 +4,7 @@ import (
 	commonBO "admin/business/pogo/bo/common"
 	systemBO "admin/business/pogo/bo/system"
 	systemDTO "admin/business/pogo/dto/system"
-	SystemService "admin/business/service/system"
+	systemService "admin/business/service/system"
 	"admin/common"
 
 	"github.com/sirupsen/logrus"
@@ -29,8 +29,8 @@ func init() {
 }
 
 type UserController struct {
-	UserService SystemService.UserService `autowire:""`
-	MenuService SystemService.MenuService `autowire:""`
+	UserService systemService.UserService `autowire:""`
+	MenuService systemService.MenuService `autowire:""`
 	Logger      *logrus.Logger            `autowire:""`
 }
 
