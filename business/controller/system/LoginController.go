@@ -10,11 +10,12 @@ import (
 )
 
 func init() {
-	gc.RegisterBeanFn(func(g *gin.Engine) *LoginController {
+	gc.RegisterBeanFn(func(authRouter *gin.RouterGroup, g *gin.Engine) *LoginController {
 		l := &LoginController{}
 		g.POST("/system/user/login", l.login)
+		authRouter.POST("/system/user/logout", l.logout)
 		return l
-	})
+	}, "authRouter")
 }
 
 type LoginController struct {
@@ -43,5 +44,13 @@ func (this *LoginController) login(ctx *gin.Context) {
 		"data": gin.H{
 			"token": token,
 		},
+	})
+}
+
+func (this *LoginController) logout(ctx *gin.Context) {
+	_ = this.LoginService.Logout(ctx.GetUint("userId"))
+	ctx.JSON(200, gin.H{
+		"code": 200,
+		"msg":  "登出成功",
 	})
 }

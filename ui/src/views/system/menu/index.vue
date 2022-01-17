@@ -55,7 +55,8 @@
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="name" label="菜单名称" :show-overflow-tooltip="true" width="160" />
+      <el-table-column prop="title" label="标题" :show-overflow-tooltip="true" width="160" />
+      <el-table-column prop="name" label="名称" />
       <el-table-column prop="icon" label="图标" align="center" width="100">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
@@ -243,7 +244,8 @@
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import IconSelect from '@/components/IconSelect'
-import { editMenu, addMenu, menuList } from '@/api/system/menu'
+import { editMenu, addMenu, menuList, delMenu } from '@/api/system/menu'
+import { MessageBox } from 'element-ui'
 
 export default {
   name: 'Menu',
@@ -331,8 +333,39 @@ export default {
       this.open = true
       this.title = '添加菜单'
     },
-    handleUpdate() {},
-    handleDelete() {},
+    handleUpdate(row) {
+      this.form = {
+        id: row.id,
+        parent_id: row.parent_id,
+        title: row.title,
+        type: row.type,
+        icon: row.icon,
+        name: row.name,
+        order: row.order,
+        path: row.path,
+        component: row.component,
+        perm: row.perm,
+        query: row.query,
+        visible: row.visible,
+        status: row.status
+      }
+      this.getTreeselect()
+
+      this.open = true
+      this.title = '修改菜单'
+    },
+    handleDelete(row) {
+      MessageBox.confirm('确认删除?', '确认删除', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delMenu(row.id).then(res => {
+          this.$message.info('删除成功')
+          this.getList()
+        })
+      })
+    },
     getTreeselect() {
       menuList().then(response => {
         this.menuOptions = []

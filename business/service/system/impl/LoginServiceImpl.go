@@ -59,3 +59,7 @@ func (this *LoginServiceImpl) Login(userName, password string) (string, error) {
 
 	return this.JwtService.CreateToken(cliams, this.Key)
 }
+
+func (this *LoginServiceImpl) Logout(userId uint) error {
+	return this.RedisClient.Del(context.Background(), this.JwtPrefix+strconv.Itoa(int(userId))).Err()
+}
